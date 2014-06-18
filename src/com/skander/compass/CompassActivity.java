@@ -75,7 +75,7 @@ public class CompassActivity extends Activity {
 		float I[] = new float[9];
 
 		boolean success = SensorManager.getRotationMatrix(R, I, aValues, mValues);
-		SensorManager.remapCoordinateSystem(R, SensorManager.AXIS_X, SensorManager.AXIS_Z, R);
+		//SensorManager.remapCoordinateSystem(R, SensorManager.AXIS_X, SensorManager.AXIS_Z, R);
 		
 		if (success) {
 			SensorManager.getOrientation(R, orientation);
