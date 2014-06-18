@@ -82,6 +82,7 @@ public class CompassActivity extends Activity {
       
 		    // Convert from Radians to Degrees.
 			orientation[0] = (float) Math.toDegrees(orientation[0]);
+			orientation[0] = (orientation[0]+360)%360;
 			orientation[1] = (float) Math.toDegrees(orientation[1]);
 			orientation[2] = (float) Math.toDegrees(orientation[2]);
 
