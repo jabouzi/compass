@@ -1,0 +1,62 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+		<TextView         
+		android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+		android:textColor="#fff"
+        android:id="@+id/view1"
+        android:text="TextView1" >
+		</TextView>
+		
+        <ImageView
+        android:id="@+id/compass1"
+        android:layout_width="100dp"
+        android:layout_height="105dp"
+        android:layout_gravity="center"
+        android:src="@drawable/grey_circle1" />
+        
+        <ImageView
+        android:id="@+id/compass2"
+        android:layout_width="340dp"
+        android:layout_height="340dp"
+        android:layout_gravity="center"
+        android:src="@drawable/_compass1" />
+
+        <ImageView
+        android:id="@+id/compass3"
+        android:layout_width="310dp"
+        android:layout_height="310dp"
+        android:layout_gravity="center"
+        android:src="@drawable/makka_compass1" />
+        
+<!--
+        <TextView
+        android:id="@+id/degree"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_centerHorizontal="true"
+		android:layout_gravity="center"
+		android:textSize="20sp"
+        android:textColor="#fff"
+        android:text="0.0" />
+-->
+<!--
+        <ImageView
+        android:id="@+id/compass3"
+        android:layout_width="175dp"
+        android:layout_height="175dp"
+        android:layout_gravity="center"
+        android:src="@drawable/compass_1" />
+-->
+<!--        <ImageView
+        android:id="@+id/imageViewCompass"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvHeading"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/compass_1" />
+-->
+
+</FrameLayout>
