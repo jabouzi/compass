@@ -37,7 +37,7 @@ public class CompassActivity extends Activity {
 	float current_pitch = 0f;
 	float current_roll = 0f;
 	
-	static final float ALPHA = 0.15f;
+	static final float ALPHA = 0.2f;
 	
 	SensorManager sensorManager;
 	
@@ -77,11 +77,11 @@ public class CompassActivity extends Activity {
 		//runOnUiThread(new Runnable() {
 			//public void run() {
 			
-				rotate(image2, current_heading, Math.round(orientation[0]), 210);		
+				rotate(image2, current_heading, orientation[0], 100);		
 				current_heading = -orientation[0];
 				current_pitch = orientation[1];
 				current_roll = orientation[2];
-				view1.setText(String.valueOf((int)orientation[0]));
+				view4.setText("ORIENTATION 4 : "+String.valueOf((int)orientation[0]));
 				//view2.setText("PITCH : "+Float.toString(values[1]));
 				//view3.setText("ROLL : "+Float.toString(values[2]));
 				//Log.d("COMPASS : HEADING2", String.valueOf(current_heading));
@@ -94,7 +94,7 @@ public class CompassActivity extends Activity {
 		float R[] = new float[9];
 		float I[] = new float[9];
 
-		view2.setText(String.valueOf(mValues[0]));
+		view1.setText("ORIENTATION 1 : "+String.valueOf(mValues[0]));
 		boolean success = SensorManager.getRotationMatrix(R, I, aValues, mValues);
 		//SensorManager.remapCoordinateSystem(R, SensorManager.AXIS_X, SensorManager.AXIS_Z, R);
 		
@@ -103,11 +103,12 @@ public class CompassActivity extends Activity {
       
 		    // Convert from Radians to Degrees.
 			orientation[0] = (float) Math.toDegrees(orientation[0]);
-			//orientation[0] = normalizeDegree(orientation[0]);
+			view2.setText("ORIENTATION 2 : "+String.valueOf(orientation[0]));
+			orientation[0] = normalizeDegree(orientation[0]);
+			view3.setText("ORIENTATION 3 : "+String.valueOf(orientation[0]));
 			orientation[1] = (float) Math.toDegrees(orientation[1]);
 			orientation[2] = (float) Math.toDegrees(orientation[2]);
 			updateOrientation();
-			view3.setText(String.valueOf(orientation[0]));
 		}
 		
         //return orientation;
@@ -115,21 +116,22 @@ public class CompassActivity extends Activity {
     
 	protected float[] lowPass(float[] input, float[] output)
 	{
-		if (output == null)
-			return input;
+		if (output == null)	return input;
 
 		for (int i = 0; i < input.length; i++)
 		{
 			output[i] = output[i] + ALPHA * (input[i] - output[i]);
+			//output[i] = (input[i] * ALPHA) + (output[i] * (1.0f - ALPHA));
 		}
 		return output;
 	}
 	
 	private float normalizeDegree(float value){
+		  value = Math.round(value);
           if(value >= 0.0f && value <= 180.0f){
               return value;
           }else{
-              return 180 + (180 + value);
+              return 180.0f + (180.0f + value);
           }
 	}
     
@@ -180,10 +182,10 @@ public class CompassActivity extends Activity {
 
    	  sensorManager.registerListener(sensorEventListener, 
    	                                 accelerometer, 
-   	                                 SensorManager.SENSOR_DELAY_NORMAL);
+   	                                 SensorManager.SENSOR_DELAY_FASTEST);
    	  sensorManager.registerListener(sensorEventListener, 
    	                                 magField,
-   	                                 SensorManager.SENSOR_DELAY_NORMAL);
+   	                                 SensorManager.SENSOR_DELAY_FASTEST);
    	}
 
    	@Override
