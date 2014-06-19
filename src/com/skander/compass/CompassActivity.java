@@ -24,6 +24,11 @@ public class CompassActivity extends Activity {
 	private ImageView image2;
 	private ImageView image3;
 	
+	TextView view1;
+	TextView view2;
+	TextView view3;
+	TextView view4;
+	
 	float[] aValues = new float[3];
 	float[] mValues = new float[3];
 	float orientation[] = new float[3];
@@ -44,15 +49,20 @@ public class CompassActivity extends Activity {
 	  image1 = (ImageView) findViewById(R.id.compass1);
 	  image2 = (ImageView) findViewById(R.id.compass2);
 	  image3 = (ImageView) findViewById(R.id.compass3);
+	  
+	  view1 = (TextView) findViewById(R.id.view1);
+	  view2 = (TextView) findViewById(R.id.view2);
+	  view3 = (TextView) findViewById(R.id.view3);
+	  view4 = (TextView) findViewById(R.id.view4);
 	  rotate(image3, 0f, 58.64f, 0);
 	  sensorManager = (SensorManager)getSystemService(Context.SENSOR_SERVICE);
 	  //updateOrientation();
-	  Timer updateTimer = new Timer("gForceUpdate");
-		updateTimer.scheduleAtFixedRate(new TimerTask() {
-		  public void run() {
-			updateOrientation();
-		  }
-		}, 0, 100);
+	  //Timer updateTimer = new Timer("gForceUpdate");
+		//updateTimer.scheduleAtFixedRate(new TimerTask() {
+		  //public void run() {
+			//updateOrientation();
+		  //}
+		//}, 0, 100);
 	  	//int loc[] = new int[2];
 		//image1.getLocationOnScreen(loc);
 		//Log.d("COMPASS : X", String.valueOf(loc[0]));
@@ -64,22 +74,19 @@ public class CompassActivity extends Activity {
 	}
     
     private void updateOrientation() {
-		runOnUiThread(new Runnable() {
-			public void run() {
-				TextView view1 = (TextView) findViewById(R.id.view1);
-				//TextView view2 = (TextView) findViewById(R.id.view2);
-				//TextView view3 = (TextView) findViewById(R.id.view3);
-				orientation[0] = Math.round(orientation[0]);
-				rotate(image2, current_heading, orientation[0], 210);		
+		//runOnUiThread(new Runnable() {
+			//public void run() {
+			
+				rotate(image2, current_heading, Math.round(orientation[0]), 210);		
 				current_heading = -orientation[0];
 				current_pitch = orientation[1];
 				current_roll = orientation[2];
-				view1.setText("HEADING : "+String.valueOf((int)orientation[0]));
+				view1.setText(String.valueOf((int)orientation[0]));
 				//view2.setText("PITCH : "+Float.toString(values[1]));
 				//view3.setText("ROLL : "+Float.toString(values[2]));
 				//Log.d("COMPASS : HEADING2", String.valueOf(current_heading));
-			}
-		});
+			//}
+		//});
    	}
     
     private void calculateOrientation() {
@@ -87,6 +94,7 @@ public class CompassActivity extends Activity {
 		float R[] = new float[9];
 		float I[] = new float[9];
 
+		view2.setText(String.valueOf(mValues[0]));
 		boolean success = SensorManager.getRotationMatrix(R, I, aValues, mValues);
 		//SensorManager.remapCoordinateSystem(R, SensorManager.AXIS_X, SensorManager.AXIS_Z, R);
 		
@@ -95,11 +103,13 @@ public class CompassActivity extends Activity {
       
 		    // Convert from Radians to Degrees.
 			orientation[0] = (float) Math.toDegrees(orientation[0]);
-			orientation[0] = (orientation[0]+360)%360;
+			//orientation[0] = normalizeDegree(orientation[0]);
 			orientation[1] = (float) Math.toDegrees(orientation[1]);
 			orientation[2] = (float) Math.toDegrees(orientation[2]);
-
+			updateOrientation();
+			view3.setText(String.valueOf(orientation[0]));
 		}
+		
         //return orientation;
     }
     
@@ -113,6 +123,14 @@ public class CompassActivity extends Activity {
 			output[i] = output[i] + ALPHA * (input[i] - output[i]);
 		}
 		return output;
+	}
+	
+	private float normalizeDegree(float value){
+          if(value >= 0.0f && value <= 180.0f){
+              return value;
+          }else{
+              return 180 + (180 + value);
+          }
 	}
     
     private void rotate(ImageView imgview, float current_degree,  float degree, int duration) {
