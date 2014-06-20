@@ -22,24 +22,21 @@ public class CompassActivity extends Activity {
 		
 	private ImageView image1;
 	private ImageView image2;
-	private ImageView image3;
-	
-	TextView view1;
-	TextView view2;
-	TextView view3;
-	TextView view4;
-	
-	float[] aValues = new float[3];
-	float[] mValues = new float[3];
-	float orientation[] = new float[3];
-	
-	float current_heading = 0f;
-	float current_pitch = 0f;
-	float current_roll = 0f;
-	
+	private ImageView image3;	
+	private TextView view1;
+	private TextView view2;
+	private TextView view3;
+	private TextView view4;	
+	private float[] aValues = new float[3];
+	private float[] mValues = new float[3];
+	private float orientation[] = new float[3];	
+	private float current_heading = 0f;
+	private float current_pitch = 0f;
+	private float current_roll = 0f;	
+	private float currentAcceleration = 0;
+	private float maxAcceleration = 0; 	
 	static final float ALPHA = 0.2f;
-	
-	SensorManager sensorManager;
+	private SensorManager sensorManager;
 	
     /** Called when the activity is first created. */
 	@Override
