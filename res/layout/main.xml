@@ -6,23 +6,30 @@
     android:id="@+id/view">    
 <TextView         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-          	android:textSize="20sp"
+          	android:textSize="25sp"
 			android:textColor="#fff"
           android:id="@+id/view1"
           android:text="TextView1" >
 </TextView>
 <TextView         android:layout_width="wrap_content"
         android:layout_height="wrap_content" 
-          android:textSize="20sp"
+          android:textSize="25sp"
 			android:textColor="#fff"
           android:id="@+id/view2"
           android:text="TextView2" >
 </TextView>
 <TextView         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-          android:textSize="20sp"
+          android:textSize="25sp"
 			android:textColor="#fff"
           android:id="@+id/view3"
           android:text="TextView3" >
+</TextView>
+<TextView         android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+          android:textSize="25sp"
+			android:textColor="#fff"
+          android:id="@+id/view4"
+          android:text="TextView4" >
 </TextView>
 </LinearLayout>
