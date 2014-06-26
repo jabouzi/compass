@@ -82,10 +82,8 @@ public class CompassActivity2 extends Activity {
 		//runOnUiThread(new Runnable() {
 			//public void run() {
 			
-				if (current_heading == 0 && rValues[0] == 359) current_heading = 360;
-				else if (current_heading == 359 && rValues[0] == 0) current_heading = 360;
 				//rotate(image2, current_heading, orientation[0], 100);		
-				rotate(image2, current_heading, rValues[0], 100);		
+				rotate(image2, ModNearestInt((current_heading - rValues[0]), 360), rValues[0], 100);		
 				current_heading = -rValues[0];
 				current_pitch = orientation[1];
 				current_roll = orientation[2];
@@ -142,6 +140,10 @@ public class CompassActivity2 extends Activity {
           }else{
               return 180.0f + (180.0f + value);
           }
+	}
+	
+	float ModNearestInt(float a, float b) {
+		return a - b * Math.round(a / b);
 	}
     
     private void rotate(ImageView imgview, float current_degree,  float degree, int duration) {
