@@ -82,6 +82,8 @@ public class CompassActivity2 extends Activity {
 		//runOnUiThread(new Runnable() {
 			//public void run() {
 			
+				if (current_heading == 0 && rValues[0] == 359) current_heading = 360;
+				else if (current_heading == 359 && rValues[0] == 0) current_heading = 360;
 				//rotate(image2, current_heading, orientation[0], 100);		
 				rotate(image2, current_heading, rValues[0], 100);		
 				current_heading = -rValues[0];
