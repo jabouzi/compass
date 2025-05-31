@@ -1,14 +1,22 @@
 // CompassViewModel.kt
 package com.skanderjabouzi.newcompass
 
+import android.annotation.SuppressLint
 import android.content.Context
+import android.content.pm.PackageManager
 import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import android.location.Location
+import android.location.LocationListener
 import android.location.LocationManager
+import android.os.Bundle
 import android.os.CancellationSignal
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
+import androidx.core.app.ActivityCompat
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.skanderjabouzi.newcompass.util.MathUtils
@@ -17,7 +25,8 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-class CompassViewModel : ViewModel() {
+class CompassViewModel(private val context: Context) : ViewModel() {
+
     private val _azimuth = MutableStateFlow<Azimuth?>(null)
     val azimuth: StateFlow<Azimuth?> = _azimuth.asStateFlow()
 
@@ -37,6 +46,10 @@ class CompassViewModel : ViewModel() {
     private var locationManager: LocationManager? = null
     private val sensorEventListener = CompassSensorEventListener()
     private var locationRequest: CancellationSignal? = null
+    private var locationListener: LocationListener? = null
+
+    var currentLocation by mutableStateOf<Location?>(null)
+        private set
 
     fun startSensors(context: Context) {
         sensorManager = context.getSystemService(Context.SENSOR_SERVICE) as SensorManager
@@ -77,12 +90,57 @@ class CompassViewModel : ViewModel() {
         viewModelScope.launch {
             try {
                 _locationStatus.value = LocationStatus.LOADING
-                // Location request logic here
-                // This would need permission handling and actual location request
+                checkLocationPermission()
             } catch (e: Exception) {
                 _locationStatus.value = LocationStatus.NOT_PRESENT
             }
         }
+    }
+
+    @SuppressLint("MissingPermission")
+    fun startLocationUpdates() {
+        try {
+            locationListener = object : LocationListener {
+                override fun onLocationChanged(newLocation: Location) {
+                    currentLocation = newLocation
+                }
+
+                @Deprecated("Deprecated in Java")
+                override fun onStatusChanged(provider: String?, status: Int, extras: Bundle?) {}
+                override fun onProviderEnabled(provider: String) {}
+                override fun onProviderDisabled(provider: String) {}
+            }
+
+            locationManager?.requestLocationUpdates(
+                LocationManager.GPS_PROVIDER,
+                5000, // 5 seconds
+                10f,   // 10 meters
+                locationListener!!
+            )
+
+            // Get last known location
+            locationManager?.getLastKnownLocation(LocationManager.GPS_PROVIDER)?.let { lastLocation ->
+                currentLocation = lastLocation
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    private fun checkLocationPermission() {
+        if (ActivityCompat.checkSelfPermission(
+                context,
+                android.Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED &&
+            ActivityCompat.checkSelfPermission(
+                context,
+                android.Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            _locationStatus.value = LocationStatus.PERMISSION_DENIED
+        }
+
+        _locationStatus.value = LocationStatus.PRESENT
     }
 
     private inner class CompassSensorEventListener : SensorEventListener {

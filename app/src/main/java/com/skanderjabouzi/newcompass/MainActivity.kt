@@ -26,10 +26,10 @@ class MainActivity : ComponentActivity() {
     ) { permissions ->
         when {
             permissions.getOrDefault(Manifest.permission.ACCESS_FINE_LOCATION, false) -> {
-                //compassViewModel.startLocationUpdates()
+                compassViewModel.startLocationUpdates()
             }
             permissions.getOrDefault(Manifest.permission.ACCESS_COARSE_LOCATION, false) -> {
-                //compassViewModel.startLocationUpdates()
+                compassViewModel.startLocationUpdates()
             }
         }
     }
@@ -37,33 +37,22 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        //compassViewModel = CompassViewModel()
+        compassViewModel = CompassViewModel(this)
 
-        setContent {
-            CompassActivity()
-        }
-
-        // Request location permissions
         locationPermissionRequest.launch(arrayOf(
             Manifest.permission.ACCESS_FINE_LOCATION,
             Manifest.permission.ACCESS_COARSE_LOCATION
         ))
-    }
 
-    override fun onResume() {
-        super.onResume()
-        //compassViewModel.startSensorUpdates()
-    }
-
-    override fun onPause() {
-        super.onPause()
-        //compassViewModel.stopSensorUpdates()
+        setContent {
+            CompassActivity(compassViewModel = compassViewModel)
+        }
     }
 }
 
 @SuppressLint("ContextCastToActivity")
 @Composable
-fun CompassActivity() {
+fun CompassActivity(compassViewModel: CompassViewModel) {
     var screenOrientationLocked by remember { mutableStateOf(false) }
     var trueNorth by remember { mutableStateOf(false) }
     var hapticFeedback by remember { mutableStateOf(true) }
@@ -80,6 +69,7 @@ fun CompassActivity() {
     }
 
     CompassScreen(
+        compassViewModel = compassViewModel,
         trueNorth = trueNorth,
         hapticFeedback = hapticFeedback,
         screenOrientationLocked = screenOrientationLocked,

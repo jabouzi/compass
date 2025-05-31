@@ -22,6 +22,7 @@ import com.skanderjabouzi.newcompass.CompassViewModel
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CompassScreen(
+    compassViewModel: CompassViewModel,
     trueNorth: Boolean,
     hapticFeedback: Boolean,
     screenOrientationLocked: Boolean,
@@ -29,8 +30,6 @@ fun CompassScreen(
     onHapticFeedbackChanged: (Boolean) -> Unit,
     onScreenOrientationChanged: (Boolean) -> Unit
 ) {
-    val compassViewModel: CompassViewModel = CompassViewModel()
-    val context = LocalContext.current
     var showSettings by remember { mutableStateOf(false) }
     var showSensorStatus by remember { mutableStateOf(false) }
 

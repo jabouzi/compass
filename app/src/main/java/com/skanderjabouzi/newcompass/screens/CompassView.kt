@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import android.view.HapticFeedbackConstants
+import androidx.compose.ui.unit.dp
 import com.skanderjabouzi.newcompass.util.handleHapticFeedback
 
 @Composable
