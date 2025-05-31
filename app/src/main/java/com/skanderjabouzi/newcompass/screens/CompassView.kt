@@ -83,7 +83,7 @@ fun CompassView(
                 azimuth = azimuth,
                 locationStatus = locationStatus,
                 onLocationReloadClick = { compassViewModel.requestLocation() },
-                modifier = Modifier.align(Alignment.TopCenter)
+                modifier = Modifier.align(Alignment.Center)
             )
         }
     }

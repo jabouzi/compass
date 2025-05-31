@@ -42,10 +42,10 @@ fun CompassRose(
         )
 
         // Cardinal Direction Labels
-        CompassLabels(
-            rotation = animatedRotation,
-            size = size,
-            modifier = Modifier.fillMaxSize()
-        )
+//        CompassLabels(
+//            rotation = animatedRotation,
+//            size = size,
+//            modifier = Modifier.fillMaxSize()
+//        )
     }
 }
