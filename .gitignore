@@ -14,3 +14,5 @@
 .idea
 .cxx
 local.properties
+.kotlin
+
