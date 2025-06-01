@@ -1,12 +1,16 @@
 package com.skanderjabouzi.newcompass.screens
 
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.dp
 import com.skanderjabouzi.newcompass.R
 import com.skanderjabouzi.newcompass.SensorAccuracy
 
@@ -22,11 +26,8 @@ fun CompassTopBarActions(
         Icon(
             painter = painterResource(sensorAccuracy.iconResourceId),
             contentDescription = "Sensor Status",
-            tint = when (sensorAccuracy) {
-                SensorAccuracy.NO_CONTACT, SensorAccuracy.UNRELIABLE, SensorAccuracy.LOW ->
-                    MaterialTheme.colorScheme.error
-                else -> MaterialTheme.colorScheme.onSurface
-            }
+            modifier = Modifier.size(24.dp), // Added size modifier
+            tint = Color.Unspecified //
         )
     }
 

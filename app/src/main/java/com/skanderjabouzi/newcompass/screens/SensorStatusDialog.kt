@@ -18,6 +18,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.skanderjabouzi.newcompass.CompassViewModel
+import com.skanderjabouzi.newcompass.R
 import com.skanderjabouzi.newcompass.SensorAccuracy
 
 // SensorStatusDialog.kt
@@ -37,7 +38,7 @@ fun SensorStatusDialog(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Icon(
-                        painter = painterResource(sensorAccuracy.iconResourceId),
+                        painter = painterResource(R.drawable.img_sensor_calibration_explanation),
                         contentDescription = null,
                         tint = when (sensorAccuracy) {
                             SensorAccuracy.NO_CONTACT, SensorAccuracy.UNRELIABLE, SensorAccuracy.LOW ->

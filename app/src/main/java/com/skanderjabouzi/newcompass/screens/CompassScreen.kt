@@ -69,27 +69,6 @@ fun CompassScreen(
                 hapticFeedback = hapticFeedback,
                 modifier = Modifier.fillMaxSize()
             )
-
-            // You can keep this or remove it if it's redundant.
-            Box(
-                modifier = Modifier
-                    .size(12.dp)
-                    .clip(CircleShape)
-                    .background(Color.Red)
-                    .align(Alignment.Center)
-            )
-
-            Canvas(
-                modifier = Modifier.fillMaxSize() // Canvas overlays CompassView and the dot
-            ) {
-                val centerWidth = this.size.width / 2
-                drawLine(
-                    color = Color.Red,
-                    start = Offset(centerWidth, 0f), // Start at the top edge of the Canvas
-                    end = Offset(centerWidth, 60f),   // Length of the line
-                    strokeWidth = 6f
-                )
-            }
         }
     }
 

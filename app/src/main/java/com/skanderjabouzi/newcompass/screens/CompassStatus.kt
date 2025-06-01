@@ -30,15 +30,18 @@ fun CompassStatus(
 ) {
     Column(
         modifier = modifier.padding(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         azimuth?.let {
             Text(
+                modifier = Modifier.padding(bottom = 2.dp),
                 text = "${it.roundedDegrees}°",
                 style = MaterialTheme.typography.headlineLarge,
                 fontWeight = FontWeight.Bold
             )
+            Spacer(modifier = Modifier.height(4.dp))
             Text(
+                modifier = Modifier.padding(top = 2.dp),
                 text = stringResource(it.cardinalDirection.labelResourceId),
                 style = MaterialTheme.typography.titleMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
