@@ -12,6 +12,8 @@ import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
 import android.os.Bundle
+import android.view.Surface
+import android.view.WindowManager
 // import android.os.CancellationSignal // Keep if using getCurrentLocation elsewhere
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.ViewModel
@@ -227,15 +229,15 @@ class CompassViewModel(private val context: Context) : ViewModel() {
         private fun getCurrentDisplayRotation(): DisplayRotation {
             // TODO: Implement this method to get the actual display rotation from the context
             // For example, using context.display.rotation
-            // val display = (appContext.getSystemService(Context.WINDOW_SERVICE) as WindowManager).defaultDisplay
-            // return when (display.rotation) {
-            //     Surface.ROTATION_0 -> DisplayRotation.ROTATION_0
-            //     Surface.ROTATION_90 -> DisplayRotation.ROTATION_90
-            //     Surface.ROTATION_180 -> DisplayRotation.ROTATION_180
-            //     Surface.ROTATION_270 -> DisplayRotation.ROTATION_270
-            //     else -> DisplayRotation.ROTATION_0
-            // }
-            return DisplayRotation.ROTATION_0 // Placeholder
+             val display = (appContext.getSystemService(Context.WINDOW_SERVICE) as WindowManager).defaultDisplay
+             return when (display.rotation) {
+                 Surface.ROTATION_0 -> DisplayRotation.ROTATION_0
+                 Surface.ROTATION_90 -> DisplayRotation.ROTATION_90
+                 Surface.ROTATION_180 -> DisplayRotation.ROTATION_180
+                 Surface.ROTATION_270 -> DisplayRotation.ROTATION_270
+                 else -> DisplayRotation.ROTATION_0
+             }
+            //return DisplayRotation.ROTATION_0 // Placeholder
         }
     }
 }
