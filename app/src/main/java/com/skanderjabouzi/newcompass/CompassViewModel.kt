@@ -227,8 +227,8 @@ class CompassViewModel(private val context: Context) : ViewModel() {
         }
 
         private fun getCurrentDisplayRotation(): DisplayRotation {
-            // TODO: Implement this method to get the actual display rotation from the context
-            // For example, using context.display.rotation
+            // This method is used to get the actual display rotation from the context
+            // by using context.display.rotation
              val display = (appContext.getSystemService(Context.WINDOW_SERVICE) as WindowManager).defaultDisplay
              return when (display.rotation) {
                  Surface.ROTATION_0 -> DisplayRotation.ROTATION_0
@@ -237,7 +237,6 @@ class CompassViewModel(private val context: Context) : ViewModel() {
                  Surface.ROTATION_270 -> DisplayRotation.ROTATION_270
                  else -> DisplayRotation.ROTATION_0
              }
-            //return DisplayRotation.ROTATION_0 // Placeholder
         }
     }
 }
