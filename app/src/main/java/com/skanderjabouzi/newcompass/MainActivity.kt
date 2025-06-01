@@ -1,6 +1,7 @@
 // MainActivity.kt
 package com.skanderjabouzi.newcompass
 
+import android.annotation.SuppressLint
 import android.content.pm.ActivityInfo
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -22,6 +23,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+@SuppressLint("ContextCastToActivity")
 @Composable
 fun MainScreen() {
     val context = LocalContext.current
