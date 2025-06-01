@@ -20,10 +20,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 
 @Composable
 fun CompassStatus(
@@ -60,7 +56,7 @@ fun CompassStatus(
                 IconButton(onClick = onLocationReloadClick) {
                     Icon(
                         Icons.Default.Refresh,
-                        contentDescription = "Reload Location",
+                        contentDescription = "Reload Location", // Consider using stringResource
                         tint = MaterialTheme.colorScheme.primary
                     )
                 }

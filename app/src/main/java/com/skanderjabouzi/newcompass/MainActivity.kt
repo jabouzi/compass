@@ -1,68 +1,43 @@
 // MainActivity.kt
 package com.skanderjabouzi.newcompass
 
-import android.Manifest
-import android.annotation.SuppressLint
-import android.app.Activity
 import android.content.pm.ActivityInfo
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.skanderjabouzi.newcompass.screens.CompassScreen
 
 class MainActivity : ComponentActivity() {
-    private lateinit var compassViewModel: CompassViewModel
-
-    private val locationPermissionRequest = registerForActivityResult(
-        ActivityResultContracts.RequestMultiplePermissions()
-    ) { permissions ->
-        when {
-            permissions.getOrDefault(Manifest.permission.ACCESS_FINE_LOCATION, false) -> {
-                compassViewModel.startLocationUpdates()
-            }
-            permissions.getOrDefault(Manifest.permission.ACCESS_COARSE_LOCATION, false) -> {
-                compassViewModel.startLocationUpdates()
-            }
-        }
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        compassViewModel = CompassViewModel(this)
-
-        locationPermissionRequest.launch(arrayOf(
-            Manifest.permission.ACCESS_FINE_LOCATION,
-            Manifest.permission.ACCESS_COARSE_LOCATION
-        ))
-
         setContent {
-            CompassActivity(compassViewModel = compassViewModel)
+            // NewCompassTheme { // Apply your app's theme
+            MainScreen()
+            // }
         }
     }
 }
 
-@SuppressLint("ContextCastToActivity")
 @Composable
-fun CompassActivity(compassViewModel: CompassViewModel) {
-    var screenOrientationLocked by remember { mutableStateOf(false) }
-    var trueNorth by remember { mutableStateOf(false) }
-    var hapticFeedback by remember { mutableStateOf(true) }
+fun MainScreen() {
+    val context = LocalContext.current
+    val compassViewModel: CompassViewModel = viewModel(
+        factory = CompassViewModelFactory(context.applicationContext)
+    )
 
-    val activity = LocalContext.current as Activity
+    var trueNorthUserSetting by rememberSaveable { mutableStateOf(false) }
+    var hapticFeedbackUserSetting by rememberSaveable { mutableStateOf(true) }
+    var screenOrientationLocked by rememberSaveable { mutableStateOf(false) }
 
-    // Handle screen orientation
+    // Effect to lock/unlock screen orientation
+    val activity = LocalContext.current as? ComponentActivity
     LaunchedEffect(screenOrientationLocked) {
-        activity.requestedOrientation = if (screenOrientationLocked) {
-            ActivityInfo.SCREEN_ORIENTATION_LOCKED
+        activity?.requestedOrientation = if (screenOrientationLocked) {
+            ActivityInfo.SCREEN_ORIENTATION_PORTRAIT // Or your preferred locked orientation
         } else {
             ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
         }
@@ -70,11 +45,11 @@ fun CompassActivity(compassViewModel: CompassViewModel) {
 
     CompassScreen(
         compassViewModel = compassViewModel,
-        trueNorth = trueNorth,
-        hapticFeedback = hapticFeedback,
+        trueNorth = trueNorthUserSetting,
+        hapticFeedback = hapticFeedbackUserSetting,
         screenOrientationLocked = screenOrientationLocked,
-        onTrueNorthChanged = { trueNorth = it },
-        onHapticFeedbackChanged = { hapticFeedback = it },
+        onTrueNorthChanged = { trueNorthUserSetting = it },
+        onHapticFeedbackChanged = { hapticFeedbackUserSetting = it },
         onScreenOrientationChanged = { screenOrientationLocked = it }
     )
 }

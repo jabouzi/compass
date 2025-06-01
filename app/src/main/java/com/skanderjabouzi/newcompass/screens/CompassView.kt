@@ -14,8 +14,6 @@ import com.skanderjabouzi.newcompass.CompassViewModel
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
-import android.view.HapticFeedbackConstants
-import androidx.compose.ui.unit.dp
 import com.skanderjabouzi.newcompass.util.handleHapticFeedback
 
 @Composable
@@ -27,8 +25,6 @@ fun CompassView(
 ) {
     val context = LocalContext.current
     val azimuth by compassViewModel.azimuth.collectAsState()
-    val sensorAccuracy by compassViewModel.sensorAccuracy.collectAsState()
-    val location by compassViewModel.location.collectAsState()
     val locationStatus by compassViewModel.locationStatus.collectAsState()
 
     var lastHapticFeedbackPoint by remember { mutableStateOf<Azimuth?>(null) }
@@ -36,13 +32,14 @@ fun CompassView(
     // Handle sensors and location
     LaunchedEffect(trueNorth) {
         compassViewModel.setTrueNorth(trueNorth)
-        if (trueNorth && location == null) {
-            compassViewModel.requestLocation()
-        }
+        // The following check might be redundant if requestLocation is handled by locationStatus changes
+        // if (trueNorth && location == null && locationStatus != LocationStatus.Loading) {
+        //     compassViewModel.requestLocation()
+        // }
     }
 
-    DisposableEffect(context) {
-        compassViewModel.startSensors(context)
+    DisposableEffect(Unit) { // Changed context to Unit if sensors don't depend on context for start/stop
+        compassViewModel.startSensors()
         onDispose {
             compassViewModel.stopSensors()
         }
@@ -50,7 +47,7 @@ fun CompassView(
 
     BoxWithConstraints(modifier = modifier) {
         val size = minOf(maxWidth, maxHeight)
-        val center = size / 2
+        // val center = size / 2 // Not used
 
         Box(
             modifier = Modifier
@@ -83,7 +80,7 @@ fun CompassView(
             CompassStatus(
                 azimuth = azimuth,
                 locationStatus = locationStatus,
-                onLocationReloadClick = { compassViewModel.requestLocation() },
+                onLocationReloadClick = { compassViewModel.startLocationUpdates() },
                 modifier = Modifier.align(Alignment.Center)
             )
         }
