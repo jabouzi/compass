@@ -38,12 +38,12 @@ fun CompassView(
         // }
     }
 
-    DisposableEffect(Unit) { // Changed context to Unit if sensors don't depend on context for start/stop
-        compassViewModel.startSensors()
-        onDispose {
-            compassViewModel.stopSensors()
-        }
-    }
+//    DisposableEffect(Unit) { // Changed context to Unit if sensors don't depend on context for start/stop
+//        compassViewModel.startSensors()
+//        onDispose {
+//            compassViewModel.stopSensors()
+//        }
+//    }
 
     BoxWithConstraints(modifier = modifier) {
         val size = minOf(maxWidth, maxHeight)
@@ -80,7 +80,7 @@ fun CompassView(
             CompassStatus(
                 azimuth = azimuth,
                 locationStatus = locationStatus,
-                onLocationReloadClick = { compassViewModel.startLocationUpdates() },
+                onLocationReloadClick = {  },
                 modifier = Modifier.align(Alignment.Center)
             )
         }

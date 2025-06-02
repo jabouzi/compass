@@ -24,3 +24,16 @@ enum class DisplayRotation {
     ROTATION_180,
     ROTATION_270
 }
+
+//data class RotationVector(val x: Float, val y: Float, val z: Float)
+//
+//data class Azimuth(val value: Float) {
+//    fun plus(degrees: Float): Azimuth {
+//        // Ensure result is within [0, 360)
+//        var result = (this.value + degrees) % 360
+//        if (result < 0) {
+//            result += 360
+//        }
+//        return Azimuth(result)
+//    }
+//}
