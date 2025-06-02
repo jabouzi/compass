@@ -1,4 +1,3 @@
-// MainActivity.kt
 package com.skanderjabouzi.newcompass
 
 import android.annotation.SuppressLint
