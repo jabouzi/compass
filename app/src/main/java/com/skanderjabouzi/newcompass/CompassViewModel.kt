@@ -1,4 +1,3 @@
-// CompassViewModel.kt
 package com.skanderjabouzi.newcompass
 
 import android.annotation.SuppressLint
@@ -14,15 +13,18 @@ import android.location.LocationManager
 import android.os.Bundle
 import android.view.Surface
 import android.view.WindowManager
-// import android.os.CancellationSignal // Keep if using getCurrentLocation elsewhere
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import com.skanderjabouzi.newcompass.model.Azimuth
+import com.skanderjabouzi.newcompass.model.DisplayRotation
+import com.skanderjabouzi.newcompass.model.LocationStatus
+import com.skanderjabouzi.newcompass.model.RotationVector
+import com.skanderjabouzi.newcompass.model.SensorAccuracy
 import com.skanderjabouzi.newcompass.util.MathUtils
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-// import kotlinx.coroutines.launch // Keep if requestLocation() with launch is kept for other purposes
+
 
 class CompassViewModel(private val context: Context) : ViewModel() {
 

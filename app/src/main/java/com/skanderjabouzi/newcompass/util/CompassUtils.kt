@@ -4,7 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.view.HapticFeedbackConstants
 import android.view.View
-import com.skanderjabouzi.newcompass.Azimuth
+import com.skanderjabouzi.newcompass.model.Azimuth
 
 fun handleHapticFeedback(
     context: Context,

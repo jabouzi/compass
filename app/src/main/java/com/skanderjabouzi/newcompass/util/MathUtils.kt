@@ -1,33 +1,15 @@
-/*
- * This file is part of Compass.
- * Copyright (C) 2023 Philipp Bobek <philipp.bobek@mailbox.org>
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * Compass is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
-
 package com.skanderjabouzi.newcompass.util
 
 import android.hardware.GeomagneticField
 import android.hardware.SensorManager
 import android.location.Location
-import com.skanderjabouzi.newcompass.Azimuth
-import com.skanderjabouzi.newcompass.DisplayRotation
-import com.skanderjabouzi.newcompass.DisplayRotation.ROTATION_0
-import com.skanderjabouzi.newcompass.DisplayRotation.ROTATION_180
-import com.skanderjabouzi.newcompass.DisplayRotation.ROTATION_270
-import com.skanderjabouzi.newcompass.DisplayRotation.ROTATION_90
-import com.skanderjabouzi.newcompass.RotationVector
+import com.skanderjabouzi.newcompass.model.Azimuth
+import com.skanderjabouzi.newcompass.model.DisplayRotation
+import com.skanderjabouzi.newcompass.model.DisplayRotation.ROTATION_0
+import com.skanderjabouzi.newcompass.model.DisplayRotation.ROTATION_180
+import com.skanderjabouzi.newcompass.model.DisplayRotation.ROTATION_270
+import com.skanderjabouzi.newcompass.model.DisplayRotation.ROTATION_90
+import com.skanderjabouzi.newcompass.model.RotationVector
 import kotlin.math.roundToInt
 
 private const val AZIMUTH = 0

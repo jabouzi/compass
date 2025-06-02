@@ -21,7 +21,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.skanderjabouzi.newcompass.Azimuth
+import com.skanderjabouzi.newcompass.model.Azimuth
 import com.skanderjabouzi.newcompass.R
 
 @Composable

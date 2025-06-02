@@ -9,7 +9,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import com.skanderjabouzi.newcompass.Azimuth
+import com.skanderjabouzi.newcompass.model.Azimuth
 import com.skanderjabouzi.newcompass.CompassViewModel
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.collectAsState
