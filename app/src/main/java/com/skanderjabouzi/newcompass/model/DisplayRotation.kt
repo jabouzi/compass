@@ -1,22 +1,4 @@
-/*
- * This file is part of Compass.
- * Copyright (C) 2022 Philipp Bobek <philipp.bobek@mailbox.org>
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * Compass is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
-
-package com.skanderjabouzi.newcompass
+package com.skanderjabouzi.newcompass.model
 
 enum class DisplayRotation {
     ROTATION_0,
@@ -24,16 +6,3 @@ enum class DisplayRotation {
     ROTATION_180,
     ROTATION_270
 }
-
-//data class RotationVector(val x: Float, val y: Float, val z: Float)
-//
-//data class Azimuth(val value: Float) {
-//    fun plus(degrees: Float): Azimuth {
-//        // Ensure result is within [0, 360)
-//        var result = (this.value + degrees) % 360
-//        if (result < 0) {
-//            result += 360
-//        }
-//        return Azimuth(result)
-//    }
-//}

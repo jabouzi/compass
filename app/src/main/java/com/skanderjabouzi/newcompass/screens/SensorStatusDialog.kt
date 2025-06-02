@@ -19,7 +19,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.skanderjabouzi.newcompass.CompassViewModel
 import com.skanderjabouzi.newcompass.R
-import com.skanderjabouzi.newcompass.SensorAccuracy
+import com.skanderjabouzi.newcompass.model.SensorAccuracy
 
 // SensorStatusDialog.kt
 @Composable

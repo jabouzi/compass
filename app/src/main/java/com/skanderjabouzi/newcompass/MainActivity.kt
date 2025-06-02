@@ -13,6 +13,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.skanderjabouzi.newcompass.handlers.LocationHandler
 import com.skanderjabouzi.newcompass.handlers.SensorHandler
+import com.skanderjabouzi.newcompass.model.DisplayRotation
+import com.skanderjabouzi.newcompass.model.LocationStatus
 import com.skanderjabouzi.newcompass.screens.CompassScreen
 
 class MainActivity : ComponentActivity() {

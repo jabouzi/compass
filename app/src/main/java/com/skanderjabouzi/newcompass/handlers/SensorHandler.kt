@@ -6,11 +6,11 @@ import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import android.location.Location
-import com.skanderjabouzi.newcompass.Azimuth
-import com.skanderjabouzi.newcompass.DisplayRotation
-import com.skanderjabouzi.newcompass.LocationStatus
-import com.skanderjabouzi.newcompass.RotationVector
-import com.skanderjabouzi.newcompass.SensorAccuracy
+import com.skanderjabouzi.newcompass.model.Azimuth
+import com.skanderjabouzi.newcompass.model.DisplayRotation
+import com.skanderjabouzi.newcompass.model.LocationStatus
+import com.skanderjabouzi.newcompass.model.RotationVector
+import com.skanderjabouzi.newcompass.model.SensorAccuracy
 import com.skanderjabouzi.newcompass.util.MathUtils
 
 class SensorHandler(

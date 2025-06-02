@@ -21,15 +21,10 @@ package com.skanderjabouzi.newcompass.util
 import android.hardware.GeomagneticField
 import android.hardware.SensorManager
 import android.location.Location
-import com.skanderjabouzi.newcompass.Azimuth
-import com.skanderjabouzi.newcompass.DisplayRotation
-import com.skanderjabouzi.newcompass.DisplayRotation.ROTATION_0
-import com.skanderjabouzi.newcompass.DisplayRotation.ROTATION_180
-import com.skanderjabouzi.newcompass.DisplayRotation.ROTATION_270
-import com.skanderjabouzi.newcompass.DisplayRotation.ROTATION_90
-import com.skanderjabouzi.newcompass.RotationVector
+import com.skanderjabouzi.newcompass.model.Azimuth
+import com.skanderjabouzi.newcompass.model.DisplayRotation
+import com.skanderjabouzi.newcompass.model.RotationVector
 import kotlin.math.roundToInt
-
 private const val AZIMUTH = 0
 private const val AXIS_SIZE = 3
 private const val ROTATION_MATRIX_SIZE = 9
@@ -54,10 +49,10 @@ object MathUtils {
 
     private fun remapRotationMatrix(rotationMatrix: FloatArray, displayRotation: DisplayRotation): FloatArray {
         return when (displayRotation) {
-            ROTATION_0 -> remapRotationMatrix(rotationMatrix, SensorManager.AXIS_X, SensorManager.AXIS_Y)
-            ROTATION_90 -> remapRotationMatrix(rotationMatrix, SensorManager.AXIS_Y, SensorManager.AXIS_MINUS_X)
-            ROTATION_180 -> remapRotationMatrix(rotationMatrix, SensorManager.AXIS_MINUS_X, SensorManager.AXIS_MINUS_Y)
-            ROTATION_270 -> remapRotationMatrix(rotationMatrix, SensorManager.AXIS_MINUS_Y, SensorManager.AXIS_X)
+            DisplayRotation.ROTATION_0 -> remapRotationMatrix(rotationMatrix, SensorManager.AXIS_X, SensorManager.AXIS_Y)
+            DisplayRotation.ROTATION_90 -> remapRotationMatrix(rotationMatrix, SensorManager.AXIS_Y, SensorManager.AXIS_MINUS_X)
+            DisplayRotation.ROTATION_180 -> remapRotationMatrix(rotationMatrix, SensorManager.AXIS_MINUS_X, SensorManager.AXIS_MINUS_Y)
+            DisplayRotation.ROTATION_270 -> remapRotationMatrix(rotationMatrix, SensorManager.AXIS_MINUS_Y, SensorManager.AXIS_X)
         }
     }
 

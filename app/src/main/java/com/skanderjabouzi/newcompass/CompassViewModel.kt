@@ -2,6 +2,9 @@ package com.skanderjabouzi.newcompass
 
 import android.location.Location
 import androidx.lifecycle.ViewModel
+import com.skanderjabouzi.newcompass.model.Azimuth
+import com.skanderjabouzi.newcompass.model.LocationStatus
+import com.skanderjabouzi.newcompass.model.SensorAccuracy
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow

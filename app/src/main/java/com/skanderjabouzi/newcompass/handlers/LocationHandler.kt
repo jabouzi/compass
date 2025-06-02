@@ -8,7 +8,7 @@ import android.location.LocationListener
 import android.location.LocationManager
 import android.os.Bundle
 import androidx.core.app.ActivityCompat
-import com.skanderjabouzi.newcompass.LocationStatus
+import com.skanderjabouzi.newcompass.model.LocationStatus
 
 class LocationHandler(
     private val appContext: Context,
