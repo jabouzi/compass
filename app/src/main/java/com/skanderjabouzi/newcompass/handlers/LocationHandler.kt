@@ -12,7 +12,7 @@ import com.skanderjabouzi.newcompass.model.LocationStatus
 
 class LocationHandler(
     private val appContext: Context,
-    private val onLocationChanged: (Location?) -> Unit,
+    private val onLocationHasChanged: (Location?) -> Unit,
     private val onLocationStatusChanged: (LocationStatus) -> Unit
 ) {
     private var locationManager: LocationManager? = appContext.getSystemService(Context.LOCATION_SERVICE) as LocationManager
@@ -42,7 +42,7 @@ class LocationHandler(
         if (internalLocationListener == null) {
             internalLocationListener = object : LocationListener {
                 override fun onLocationChanged(newLocation: Location) {
-                    onLocationChanged(newLocation)
+                    onLocationHasChanged(newLocation)
                     onLocationStatusChanged(LocationStatus.PRESENT)
                 }
 
@@ -54,7 +54,7 @@ class LocationHandler(
                 }
 
                 override fun onProviderDisabled(provider: String) {
-                    onLocationChanged(null)
+                    onLocationHasChanged(null)
                     onLocationStatusChanged(LocationStatus.NOT_PRESENT)
                 }
             }
@@ -63,7 +63,7 @@ class LocationHandler(
         try {
             val lastKnownLocation = locationManager?.getLastKnownLocation(LocationManager.GPS_PROVIDER)
             if (lastKnownLocation != null) {
-                onLocationChanged(lastKnownLocation)
+                onLocationHasChanged(lastKnownLocation)
                 onLocationStatusChanged(LocationStatus.PRESENT)
             }
             // else status remains LOADING until first update from requestLocationUpdates
@@ -77,7 +77,7 @@ class LocationHandler(
         } catch (e: SecurityException) {
             onLocationStatusChanged(LocationStatus.PERMISSION_DENIED)
         } catch (e: Exception) {
-            onLocationChanged(null)
+            onLocationHasChanged(null)
             onLocationStatusChanged(LocationStatus.NOT_PRESENT)
         }
     }

@@ -4,14 +4,24 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.view.Surface
-import android.view.WindowManager // Added import
+import android.view.WindowManager
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Button
+import androidx.compose.material3.Text
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.skanderjabouzi.newcompass.handlers.LocationHandler
 import com.skanderjabouzi.newcompass.handlers.SensorHandler
+import com.skanderjabouzi.newcompass.handlers.rememberLocationPermissionController
 import com.skanderjabouzi.newcompass.model.DisplayRotation
 import com.skanderjabouzi.newcompass.model.LocationStatus
 import com.skanderjabouzi.newcompass.screens.CompassScreen
@@ -32,6 +42,7 @@ class MainActivity : ComponentActivity() {
 fun MainScreen() {
     val context = LocalContext.current
     val compassViewModel: CompassViewModel = viewModel()
+    val locationPermissionController = rememberLocationPermissionController()
 
     val sensorHandler = remember {
         SensorHandler(
@@ -58,18 +69,20 @@ fun MainScreen() {
     val locationHandler = remember {
         LocationHandler(
             appContext = context.applicationContext,
-            onLocationChanged = { newLocation ->
+            onLocationHasChanged = { newLocation ->
                 compassViewModel.updateLocation(newLocation, compassViewModel.locationStatus.value)
             },
             onLocationStatusChanged = { newStatus ->
-                compassViewModel.updateLocation(compassViewModel.location.value, newStatus)
+                val currentLocation = if (newStatus == LocationStatus.PRESENT) compassViewModel.location.value else null
+                compassViewModel.updateLocation(currentLocation, newStatus)
             }
         )
     }
 
     val trueNorthEnabled by compassViewModel.trueNorth.collectAsState()
-    var hapticFeedbackUserSetting by remember { mutableStateOf(true) } // Added state
-    var screenOrientationLocked by remember { mutableStateOf(false) } // Added state
+    val locationStatus by compassViewModel.locationStatus.collectAsState()
+    var hapticFeedbackUserSetting by remember { mutableStateOf(true) }
+    var screenOrientationLocked by remember { mutableStateOf(false) }
 
     DisposableEffect(Unit) {
         sensorHandler.start()
@@ -79,22 +92,49 @@ fun MainScreen() {
         }
     }
 
-    LaunchedEffect(trueNorthEnabled) {
+    LaunchedEffect(trueNorthEnabled, locationPermissionController.isPermissionGranted(), locationStatus) {
         if (trueNorthEnabled) {
-            locationHandler.startUpdates()
+            if (locationPermissionController.isPermissionGranted()) {
+                if (locationStatus != LocationStatus.PRESENT && locationStatus != LocationStatus.LOADING) {
+                    locationHandler.startUpdates()
+                }
+            } else {
+                if (locationStatus != LocationStatus.PERMISSION_DENIED) {
+                    locationHandler.startUpdates()
+                }
+            }
         } else {
             locationHandler.stopUpdates()
             compassViewModel.updateLocation(null, LocationStatus.NOT_PRESENT)
         }
     }
 
-    CompassScreen(
-        compassViewModel = compassViewModel,
-        trueNorth = trueNorthEnabled,
-        hapticFeedback = hapticFeedbackUserSetting,
-        screenOrientationLocked = screenOrientationLocked,
-        onTrueNorthChanged = { enabled -> compassViewModel.setTrueNorth(enabled) },
-        onHapticFeedbackChanged = { hapticFeedbackUserSetting = it },
-        onScreenOrientationChanged = { screenOrientationLocked = it }
-    )
+    if (trueNorthEnabled && locationStatus == LocationStatus.PERMISSION_DENIED && !locationPermissionController.isPermissionGranted()) {
+        Column(
+            modifier = Modifier.fillMaxSize().padding(16.dp),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text("True North functionality requires location permission.")
+            Button(onClick = {
+                locationPermissionController.requestPermission { isGranted: Boolean -> // Explicitly typed
+                    if (isGranted) {
+                        locationHandler.startUpdates()
+                    }
+                }
+            }) {
+                Text("Grant Location Permission")
+            }
+        }
+    } else {
+        CompassScreen(
+            compassViewModel = compassViewModel,
+            trueNorth = trueNorthEnabled,
+            hapticFeedback = hapticFeedbackUserSetting,
+            screenOrientationLocked = screenOrientationLocked,
+            onTrueNorthChanged = { enabled -> compassViewModel.setTrueNorth(enabled) },
+            onHapticFeedbackChanged = { hapticFeedbackUserSetting = it },
+            onScreenOrientationChanged = { screenOrientationLocked = it }
+        )
+    }
 }
